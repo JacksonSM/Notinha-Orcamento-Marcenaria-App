@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrcamentoMarcenaria.Pages.CriarOrcamento"
+             xmlns:model="clr-namespace:OrcamentoMarcenaria.Model"
+             xmlns:viewmodel="clr-namespace:OrcamentoMarcenaria.ViewModel"
+             x:DataType="viewmodel:OrcamentoViewModel"
+             Title="Criar Orçamento">
+    <ScrollView>
+        <VerticalStackLayout Padding="20, 30">
+
+            <!--Campo cliente-->
+            <StackLayout Margin="0, 15">
+                <Label Text="Cliente"/>
+                <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+
+                    <Entry x:Name="entry_cliente" Keyboard="Default" Text="{Binding Cliente}" Placeholder="Ex: João"/>
+                </Border>
+
+            </StackLayout>
+
+
+            <!--Campo trabalho-->
+            <StackLayout Margin="0, 15">
+                <Label Text="Trabalho"/>
+                <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+
+                    <Entry x:Name="entry_trabalho" Keyboard="Default" Text="{Binding Trabalho}" Placeholder="Ex: Porteira"/>
+                </Border>
+            </StackLayout>
+
+            <!--Campo MaoObra-->
+            <StackLayout Margin="0, 15">
+                <Label Text="Mão de obra"/>
+                <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+
+                    <Entry x:Name="entry_maoObra" Keyboard="Numeric" Text="{Binding MaoObra}" TextChanged="entry_maoObra_TextChanged" Placeholder="0.0"/>
+                </Border>
+            </StackLayout>
+
+
+            <!--Cabecalho da area de pecas-->
+            <StackLayout>
+                <Label Text="Itens" FontSize="Title"/>
+                <Line Stroke="{StaticResource Primary}"
+                X2="500" StrokeThickness="4" />
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Peça" Grid.Column="0" HorizontalOptions="Start" />
+                    <Label Text="Quantidade" Grid.Column="1" HorizontalOptions="Center"/>
+                    <Label Text="Valor Total" Grid.Column="2" HorizontalOptions="End"/>
+                </Grid>
+            </StackLayout>
+
+            <!--Area das pecas-->
+            <StackLayout >
+
+            </StackLayout>
+
+            <CollectionView ItemsSource="{Binding Pecas}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:PecaModel">
+                        <Grid Padding="15, 20" Margin="0, 15" BackgroundColor="#D9D9D9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Nome}" Grid.Column="0" HorizontalOptions="Start" />
+                            <Label Text="{Binding Quantidade}" Grid.Column="1" HorizontalOptions="Center"/>
+                            <Label Text="{Binding ValorTotal, StringFormat='R$ {0:F2}'}" Grid.Column="2" HorizontalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!--Botao de adicionar peca-->
+            <ImageButton BackgroundColor="Transparent"
+                HeightRequest="50"
+                WidthRequest="50" 
+                HorizontalOptions="End"
+                Source="plus_circle.svg"
+                Command="{Binding AdicionarPecaCommand}"
+                Margin="0,20">
+
+            </ImageButton>
+            
+            <!--Area das totais-->
+            <StackLayout>
+                <Label Text="Total" FontSize="Title"/>
+                <Line Stroke="{StaticResource Primary}"
+                X2="500" StrokeThickness="4" />
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Total Peças" Grid.Column="0" Grid.Row="0" FontSize="16" />
+                    <Label Text="Valor Total" Grid.Column="0" Grid.Row="2" FontSize="16"/>
+                    <Label Text="{Binding TotalPecas}" Grid.Column="3" Grid.Row="0" FontSize="16" HorizontalOptions="End"/>
+                    <Label Text="{Binding PrecoFinal, StringFormat='R$ {0:F2}'}" Grid.Column="3" Grid.Row="2" FontSize="16" HorizontalOptions="End"/>
+                </Grid>
+            </StackLayout>
+
+            
+                <Grid ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="LIMPAR" Margin="0,20" Clicked="LimparDados" Grid.Column="0"/>
+                    <Button Text="SALVAR" Margin="0,20" Command="{Binding SalvarOrcamentoCommand}"
+                            Grid.Column="1"
+                            IsEnabled="{Binding IsNotBusy}"/>
+                </Grid>
+           
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             x:Class="OrcamentoMarcenaria.Pages.Modal.AdicaoPeca"
+             Title="AdicaoPeca" 
+             CloseWhenBackgroundIsClicked="True"
+             BackgroundColor="#80000000"
+             xmlns:viewmodel="clr-namespace:OrcamentoMarcenaria.ViewModel"
+             x:DataType="viewmodel:AdicaoPecaViewModel">
+    
+    <VerticalStackLayout WidthRequest="300" 
+                         HeightRequest="700"
+                         VerticalOptions="Center"
+                         BackgroundColor="White"
+                         Spacing="10"
+                         Padding="20, 20">
+
+        <!--Campo nome-->
+        <StackLayout Margin="0, 0">
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+
+                <Picker Title="Tipo Peça" x:Name="picker_tipoPeca" SelectedIndexChanged="picker_tipoPeca_SelectedIndexChanged"/>
+            </Border>
+        </StackLayout>
+
+        <!--Campo largura-->
+        <StackLayout IsVisible="{Binding IsLargura}">
+            <Label Text="Largura"/>
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0"
+                    >
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+
+                <Entry x:Name="entry_largura" Keyboard="Numeric" Text="{Binding Largura}" Placeholder="0.0"/>
+            </Border>
+        </StackLayout>
+
+        <!--Campo espessura-->
+        <StackLayout IsVisible="{Binding IsEspessura}">
+            <Label Text="Espessura"/>
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+
+                <Entry x:Name="entry_espessura" Keyboard="Numeric" Text="{Binding Espessura}" Placeholder="0.0"/>
+            </Border>
+        </StackLayout>
+
+        <!--Campo comprimento-->
+        <StackLayout IsVisible="{Binding IsComprimento}">
+            <Label Text="Comprimento"/>
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+
+                <Entry x:Name="entry_comprimento" Keyboard="Numeric" Text="{Binding Comprimento}" Placeholder="0.0"/>
+            </Border>
+        </StackLayout>
+
+        <!--Campo metro-->
+        <StackLayout  IsVisible="{Binding IsMetro}">
+            <Label Text="Metro"/>
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+
+                <Entry x:Name="entry_metro" Keyboard="Numeric" Text="{Binding Metro}" Placeholder="0.0"/>
+            </Border>
+        </StackLayout>
+
+        <!--Campo preco-->
+        <StackLayout IsVisible="{Binding IsPreco}">
+            <Label Text="Preço"/>
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+
+                <Entry x:Name="entry_preco" Keyboard="Numeric" Text="{Binding Preco}" Placeholder="0.0"/>
+            </Border>
+        </StackLayout>
+
+        <!--Campo quantidade-->
+        <StackLayout>
+            <Label Text="Quantidade"/>
+            <Border StrokeThickness="3" 
+                    Stroke="{StaticResource Primary}"
+                    Padding="10, 0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Entry Text="1" x:Name="entry_quantidade" Keyboard="Numeric" Grid.Column="0" Placeholder="0.0"/>
+                    <Stepper x:Name="stp_quantidade" Grid.Column="1" Value="{Binding Quantidade}"/>
+                </Grid>
+            </Border>
+        </StackLayout>
+
+        <StackLayout>
+            <Label Text="Total" FontSize="Title"/>
+            <Line Stroke="{StaticResource Primary}"
+                X2="500" StrokeThickness="4" />
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="Preço Unitário" Grid.Column="0" Grid.Row="0" FontSize="16" />
+                <Label Text="Valor Total" Grid.Column="0" Grid.Row="2" FontSize="16"/>
+                <Label Text="{Binding ValorUnitario, StringFormat='R$ {0}'}" x:Name="lbl_PrecoUnitario" Grid.Column="3" Grid.Row="0" FontSize="16" HorizontalOptions="End"/>
+                <Label Text="{Binding ValorTotal, StringFormat='R$ {0}'}" x:Name="lbl_ValorTotal" Grid.Column="3" Grid.Row="2" FontSize="16" HorizontalOptions="End"/>
+            </Grid>
+        </StackLayout>
+
+        <Button
+                Text="Adicionar"
+                Command="{Binding AdicionarCommand}"
+                VerticalOptions="End"
+                x:Name="btn_Adicionar"
+                />
+        <Button
+                Text="Fechar"
+                Clicked="Fechar_Clicked"
+                VerticalOptions="End"
+                />
+    </VerticalStackLayout>
+</mopups:PopupPage>
